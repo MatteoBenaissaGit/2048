@@ -106,13 +106,18 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        InputCheck();
+    }
+
+    private void InputCheck()
+    {
         if (_state != GameState.WaitingInput) return;
-        
+
         if (_selectorTransform == null)
         {
             //bonus selector activation
             if (Input.GetKeyDown(KeyCode.A)) ChangeState(GameState.Selecting);
-            
+
             //grid move
             if (Input.GetKeyDown(KeyCode.LeftArrow)) Shift(Vector2.left);
             if (Input.GetKeyDown(KeyCode.RightArrow)) Shift(Vector2.right);
@@ -130,7 +135,7 @@ public class GameManager : MonoBehaviour
             //selector choice
             var selectorPositionNode = GetNodeAtPosition(_selectorTransform.position);
             if (Input.GetKeyDown(KeyCode.A)) DoubleBonusSelectorSelection(selectorPositionNode);
-            
+
             //quit selector
             if (Input.GetKeyDown(KeyCode.E)) DoubleBonusSelectorDeactivation();
         }
