@@ -471,7 +471,7 @@ public class GameManager : MonoBehaviour
     private void MakePointEffect(Vector2 position)
     {
         var pointEffect = Instantiate(_pointsEffectPrefab, position, Quaternion.identity);
-        pointEffect._pointControllerPosition = _pointControllerTransform.position;
+        pointEffect.PointControllerTransform = _pointControllerTransform;
         pointEffect.StartPointAnimation();
     }
 

@@ -10,11 +10,19 @@ public class PointEffectController : MonoBehaviour
     [BoxGroup("Parameters")] [SerializeField] private float _slerpEffectSpeed = 1f;
     
     private bool _isGoingToPointController = false;
-    [HideInInspector] public Vector3 _pointControllerPosition;
+    [HideInInspector] public Transform PointControllerTransform;
+    private Vector3 _pointControllerPosition => PointControllerTransform.position;
 
     //slerp variables
     private Vector3 _startPosition => transform.position;
-    
+
+    private Vector3 _pointControllerSize;
+
+    private void Start()
+    {
+        _pointControllerSize = PointControllerTransform.localScale;
+    }
+
     private void Update()
     {
         if (!_isGoingToPointController) return;
@@ -40,11 +48,9 @@ public class PointEffectController : MonoBehaviour
     private void EndAnimation()
     {
         const float effectSpeed = .25f;
-        transform.DOScale(Vector3.zero, effectSpeed).OnComplete(DestroyItself);
-    }
-
-    private void DestroyItself()
-    {
+        Vector3 punchForce = new Vector3(.2f,.2f,.2f);
+        PointControllerTransform.DOComplete();
+        PointControllerTransform.DOPunchScale(punchForce, effectSpeed);
         Destroy(gameObject);
     }
 }
