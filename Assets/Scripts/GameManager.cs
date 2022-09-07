@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
     [BoxGroup("References")] [SerializeField] private Image _bonusPrefabKeyImage;
     [BoxGroup("References")] [SerializeField] private GameObject _bonusEscapeUI;
 
-    [BoxGroup("Debug")] [SerializeField] [ReadOnly] GameState _state;
+    [BoxGroup("Debug")] [SerializeField] [ReadOnly] private GameState _state;
     [BoxGroup("Debug")] [SerializeField] [ReadOnly] private int _round;
     [BoxGroup("Debug")] [SerializeField] [ReadOnly] private int _freeNodesCount = 0;
 
