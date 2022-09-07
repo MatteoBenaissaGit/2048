@@ -10,6 +10,7 @@ public class Block : MonoBehaviour
     public Block MergingBlock;
     public bool Merging;
     public Vector2 Pos => transform.position;
+    public Vector3 Size => transform.localScale;
     
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private TextMeshPro _text;

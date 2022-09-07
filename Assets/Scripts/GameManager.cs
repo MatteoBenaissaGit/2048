@@ -206,16 +206,20 @@ public class GameManager : MonoBehaviour
         switch (AnimationNumber)
         {
             case 0 : //nothing
+                const float blockSpawnAnimationSpeed = .25f;
+                var endScale = block.Size;
+                block.transform.localScale = Vector3.zero;
+                block.transform.DOScale(endScale, blockSpawnAnimationSpeed);
                 break;
             case 1 : //merge
                 var blockPunchEffect1Scale = new Vector3(0.5f,0.5f,0.5f);
-                var blockPunchEffect1Speed = .25f;
+                const float blockPunchEffect1Speed = .25f;
                 block.transform.DOPunchScale(blockPunchEffect1Scale, blockPunchEffect1Speed);
                 block.transform.DORotate(new Vector3(0, 0, 360), blockPunchEffect1Speed);
                 break;
             case 2 : //double bonus
                 var blockPunchEffect2Scale = new Vector3(1f,1f,1f);
-                var blockPunchEffect2Speed = .2f;
+                const float blockPunchEffect2Speed = .2f;
                 block.transform.DOPunchScale(blockPunchEffect2Scale, blockPunchEffect2Speed);
                 block.transform.DORotate(new Vector3(0, 0, 360), blockPunchEffect2Speed);
                 break;
