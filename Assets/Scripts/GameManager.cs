@@ -16,7 +16,11 @@ public class GameManager : MonoBehaviour
     
     [BoxGroup("Grid")] [SerializeField] private int _width = 4;
     [BoxGroup("Grid")] [SerializeField] private int _height = 4;
-    [BoxGroup("Grid")] [SerializeField] private int _winCondition = 2048;
+    [BoxGroup("Grid")] [EnumToggleButtons] [SerializeField] private WinCondition _winConditionType;
+    private bool _isWinTypeShieldValue => _winConditionType == WinCondition.ShieldValue;
+    private bool _isWinTypePoints => _winConditionType == WinCondition.PointsValue;
+    [ShowIf("_isWinTypeShieldValue")] [BoxGroup("Grid")] [SerializeField] private int _winShieldCondition = 2048;
+    [ShowIf("_isWinTypePoints")] [BoxGroup("Grid")] [SerializeField] private int _winPointsCondition = 10000;
     [BoxGroup("Grid")] [SerializeField] private int _pointsToActivateDoubleBonus = 1000;
 
     [BoxGroup("Blocks")] [SerializeField] private List<BlockType> _types;
@@ -27,6 +31,7 @@ public class GameManager : MonoBehaviour
     [BoxGroup("References")] [SerializeField] private Block _blockPrefab;
     [BoxGroup("References")] [SerializeField] private SpriteRenderer _boardPrefabSpriteRenderer;
     [BoxGroup("References")] [SerializeField] private SpriteRenderer _selectorPrefabSpriteRenderer;
+    [BoxGroup("References")] [SerializeField] private EndGameUIController _endGameUIController;
     [Title("Points & Combo")]
     [BoxGroup("References")] [SerializeField] private ComboController _comboController;
     [BoxGroup("References")] [SerializeField] private PointsController _pointsController;
@@ -96,8 +101,10 @@ public class GameManager : MonoBehaviour
             case GameState.Moving:
                 break;
             case GameState.Win:
+                _endGameUIController.LaunchEndGameUI(true);
                 break;
             case GameState.Lose:
+                _endGameUIController.LaunchEndGameUI(false);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
@@ -190,7 +197,18 @@ public class GameManager : MonoBehaviour
             return;
         }
         
-        ChangeState(_blockList.Any(b=>b.Value>=_winCondition) ? GameState.Win : GameState.WaitingInput);
+        // enum that depend on the win condition type
+        switch (_winConditionType)
+        {
+            case WinCondition.ShieldValue:
+                ChangeState(_blockList.Any(b=>b.Value>=_winShieldCondition) ? GameState.Win : GameState.WaitingInput);
+                break;
+            case WinCondition.PointsValue:
+                ChangeState(_pointsController.ValueNumber >= _winPointsCondition ? GameState.Win : GameState.WaitingInput);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
     }
     
     IOrderedEnumerable<Node> GetFreeNodesList(List<Node> nodeList)
@@ -483,4 +501,10 @@ public enum GameState
     Moving,
     Win,
     Lose
+}
+
+public enum WinCondition
+{
+    ShieldValue,
+    PointsValue
 }

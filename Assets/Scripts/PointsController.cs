@@ -8,7 +8,7 @@ public class PointsController : MonoBehaviour, INumericValueController
 {
     [BoxGroup("Referencing")] [SerializeField] private TextMeshProUGUI _valueText;
 
-    [BoxGroup("Debug")] [SerializeField] [ReadOnly] private int _valueNumber = 0;
+    [BoxGroup("Debug")] [SerializeField] [ReadOnly] public int ValueNumber = 0;
     
     private void Start()
     {
@@ -17,20 +17,20 @@ public class PointsController : MonoBehaviour, INumericValueController
 
     public void ControllerUpdate(int value)
     { 
-        _valueNumber += value;
+        ValueNumber += value;
         //guard over 999999
-        if (_valueNumber > 999999) _valueNumber = 999999;
+        if (ValueNumber > 999999) ValueNumber = 999999;
         UpdateText();
     }
 
     public void ControllerResetToZero()
     {
-        _valueNumber = 0;
+        ValueNumber = 0;
         UpdateText();
     }
 
     public void UpdateText()
     {
-        _valueText.text = $"{_valueNumber.ToString()}";
+        _valueText.text = $"{ValueNumber.ToString()}";
     }
 }
