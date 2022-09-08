@@ -14,37 +14,38 @@ public class GameManager : MonoBehaviour
 {
     #region Variables
     
-    [BoxGroup("Grid")] [SerializeField] private int _width = 4;
-    [BoxGroup("Grid")] [SerializeField] private int _height = 4;
-    [BoxGroup("Grid")] [EnumToggleButtons] [SerializeField] private WinCondition _winConditionType;
+    [TabGroup("Grid")] [SerializeField] private int _width = 4;
+    [TabGroup("Grid")] [SerializeField] private int _height = 4;
+    [TabGroup("Grid")] [EnumToggleButtons] [SerializeField] private WinCondition _winConditionType;
     private bool _isWinTypeShieldValue => _winConditionType == WinCondition.ShieldValue;
     private bool _isWinTypePoints => _winConditionType == WinCondition.PointsValue;
-    [ShowIf("_isWinTypeShieldValue")] [BoxGroup("Grid")] [SerializeField] private int _winShieldCondition = 2048;
-    [ShowIf("_isWinTypePoints")] [BoxGroup("Grid")] [SerializeField] private int _winPointsCondition = 10000;
-    [BoxGroup("Grid")] [SerializeField] private int _pointsToActivateDoubleBonus = 1000;
+    [ShowIf("_isWinTypeShieldValue")] [TabGroup("Grid")] [SerializeField] private int _winShieldCondition = 2048;
+    [ShowIf("_isWinTypePoints")] [TabGroup("Grid")] [SerializeField] private int _winPointsCondition = 10000;
+    [TabGroup("Grid")] [SerializeField] private int _pointsToActivateDoubleBonus = 1000;
 
-    [BoxGroup("Blocks")] [SerializeField] private List<BlockType> _types;
-    [BoxGroup("Blocks")] [SerializeField] [Range(0,1)] private float _travelTime = .5f;
+    [TabGroup("Blocks")] [SerializeField] private List<BlockType> _types;
+    [TabGroup("Blocks")] [SerializeField] [Range(0,1)] private float _travelTime = .5f;
 
     [Title("Main Game")]
-    [BoxGroup("References")] [SerializeField] private Node _nodePrefab;
-    [BoxGroup("References")] [SerializeField] private Block _blockPrefab;
-    [BoxGroup("References")] [SerializeField] private SpriteRenderer _boardPrefabSpriteRenderer;
-    [BoxGroup("References")] [SerializeField] private SpriteRenderer _selectorPrefabSpriteRenderer;
-    [BoxGroup("References")] [SerializeField] private EndGameUIController _endGameUIController;
+    [TabGroup("References")] [SerializeField] private Node _nodePrefab;
+    [TabGroup("References")] [SerializeField] private Block _blockPrefab;
+    [TabGroup("References")] [SerializeField] private SpriteRenderer _boardPrefabSpriteRenderer;
+    [TabGroup("References")] [SerializeField] private SpriteRenderer _selectorPrefabSpriteRenderer;
+    [TabGroup("References")] [SerializeField] private EndGameUIController _endGameUIController;
     [Title("Points & Combo")]
-    [BoxGroup("References")] [SerializeField] private ComboController _comboController;
-    [BoxGroup("References")] [SerializeField] private PointsController _pointsController;
-    [BoxGroup("References")] [SerializeField] private Transform _pointControllerTransform;
-    [BoxGroup("References")] [SerializeField] private PointEffectController _pointsEffectPrefab;
+    [TabGroup("References")] [SerializeField] private ComboController _comboController;
+    [TabGroup("References")] [SerializeField] private PointsController _pointsController;
+    [TabGroup("References")] [SerializeField] private Transform _pointControllerTransform;
+    [TabGroup("References")] [SerializeField] private PointEffectController _pointsEffectPrefab;
+    [TabGroup("References")] [SerializeField] private GoalController _goalController;
     [Title("Bonus")]
-    [BoxGroup("References")] [SerializeField] private Image _bonusPrefabImage;
-    [BoxGroup("References")] [SerializeField] private Image _bonusPrefabKeyImage;
-    [BoxGroup("References")] [SerializeField] private GameObject _bonusEscapeUI;
+    [TabGroup("References")] [SerializeField] private Image _bonusPrefabImage;
+    [TabGroup("References")] [SerializeField] private Image _bonusPrefabKeyImage;
+    [TabGroup("References")] [SerializeField] private GameObject _bonusEscapeUI;
 
-    [BoxGroup("Debug")] [SerializeField] [ReadOnly] private GameState _state;
-    [BoxGroup("Debug")] [SerializeField] [ReadOnly] private int _round;
-    [BoxGroup("Debug")] [SerializeField] [ReadOnly] private int _freeNodesCount = 0;
+    [TabGroup("Debug")] [SerializeField] [ReadOnly] private GameState _state;
+    [TabGroup("Debug")] [SerializeField] [ReadOnly] private int _round;
+    [TabGroup("Debug")] [SerializeField] [ReadOnly] private int _freeNodesCount = 0;
 
     private List<Node> _nodeList;
     private List<Block> _blockList;
@@ -101,6 +102,7 @@ public class GameManager : MonoBehaviour
             case GameState.Moving:
                 break;
             case GameState.Win:
+                _goalController.EndAnim();
                 _endGameUIController.LaunchEndGameUI(true);
                 break;
             case GameState.Lose:
@@ -475,7 +477,7 @@ public class GameManager : MonoBehaviour
         pointEffect.StartPointAnimation();
     }
 
-    [BoxGroup("Debug")]
+    [TabGroup("Debug")]
     [Button]
     private void AddOneHundredPoints()
     {

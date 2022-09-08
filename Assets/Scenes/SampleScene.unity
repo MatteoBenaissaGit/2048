@@ -1874,6 +1874,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1446293996}
+  - component: {fileID: 1446293997}
   m_Layer: 0
   m_Name: Goal
   m_TagString: Untagged
@@ -1900,6 +1901,19 @@ Transform:
   m_Father: {fileID: 132249204}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1446293997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446293995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a68a15ba3670ee64181a9b00f15ffe01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gear: {fileID: 1183634788}
 --- !u!1 &1514913972
 GameObject:
   m_ObjectHideFlags: 0
@@ -2473,6 +2487,7 @@ MonoBehaviour:
   _pointsController: {fileID: 1753887891}
   _pointControllerTransform: {fileID: 1624777207}
   _pointsEffectPrefab: {fileID: 7318072980003868875, guid: c514b0f2d7b74474484a8778d878859b, type: 3}
+  _goalController: {fileID: 1446293997}
   _bonusPrefabImage: {fileID: 2130120698}
   _bonusPrefabKeyImage: {fileID: 1514913974}
   _bonusEscapeUI: {fileID: 198766287}
@@ -2841,7 +2856,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: The peasant is dead
+  m_text: Saved !
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bc3c4db48e80eed4fbef8c7f67383084, type: 2}
   m_sharedMaterial: {fileID: 664123214148588818, guid: bc3c4db48e80eed4fbef8c7f67383084, type: 2}
