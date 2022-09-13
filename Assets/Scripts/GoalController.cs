@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class GoalController : MonoBehaviour
 {
+    [BoxGroup("Variable")] [SerializeField] private float _gearTurnSpeed;
     [BoxGroup("References")] [SerializeField] private Transform _gear;
 
     private bool _isTurning = true;
@@ -18,8 +19,7 @@ public class GoalController : MonoBehaviour
 
     private void GearTurning()
     {
-        const float rotationSpeed = 1f;
-        if (_isTurning) _gear.transform.Rotate( 0, 0, 1);
+        if (_isTurning) _gear.transform.Rotate( 0, 0, _gearTurnSpeed);
     }
 
     public void EndAnim()
