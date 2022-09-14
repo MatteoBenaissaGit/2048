@@ -51,6 +51,17 @@ public class MenuButtonScript : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        ScaleUpAnimation();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        ScaleDownAnimation();
+    }
+
+    //scaling animation functions
+    public void ScaleUpAnimation()
+    {
         _currentTween = _animationType switch
         {
             AnimationType.SideSlide => transform.DOMoveX(_startPosition.x + _animationOffsetX, _animationSpeed),
@@ -58,8 +69,7 @@ public class MenuButtonScript : MonoBehaviour, IPointerEnterHandler, IPointerExi
             _ => throw new ArgumentOutOfRangeException()
         };
     }
-
-    public void OnPointerExit(PointerEventData eventData)
+    public void ScaleDownAnimation()
     {
         _currentTween = _animationType switch
         {
