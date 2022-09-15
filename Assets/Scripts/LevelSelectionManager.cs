@@ -2,10 +2,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class LevelSelectionManager : MonoBehaviour
 {
@@ -19,7 +21,7 @@ public class LevelSelectionManager : MonoBehaviour
     [BoxGroup("References")] [SerializeField] private GameObject _cursorPrefab;
     [BoxGroup("References")] [SerializeField] private ScrollRect _scrollRect;
 
-    private List<Transform> _buttonTransformList = new();
+    private Dictionary<Transform,bool> _buttonTransformAndUnlockBoolList = new();
     private GameObject _cursor;
     private int _currentLevelSelected = 0;
     private Tween _currentTween;
@@ -41,6 +43,8 @@ public class LevelSelectionManager : MonoBehaviour
             MoveCursor(Direction.Left);
         if (Input.GetKeyDown(KeyCode.RightArrow))
             MoveCursor(Direction.Right);
+        if (Input.GetKeyDown(KeyCode.Return))
+            SelectLevel();
     }
 
     private void GenerateLevel()
@@ -52,24 +56,34 @@ public class LevelSelectionManager : MonoBehaviour
             var button = Instantiate(_buttonPrefab, _contentScrollView.transform);
             var buttonScript = button.GetComponent<ButtonPrefabScript>();
             if (i==_numberOfLevel) buttonScript.DeactivateLine();
-            _buttonTransformList.Add(buttonScript.transform);
+            
+            //setup lock
+            bool isUnlocked = i == 1; //setup this with a dont destroy object that got the lock of each level
+            _buttonTransformAndUnlockBoolList.Add(buttonScript.transform, isUnlocked);
+            if (isUnlocked) buttonScript._menuButtonScript.Unlock();
+            if (i==1) buttonScript._menuButtonScript.ScaleUpAnimation();
+            
             //text on button
-            if (buttonScript!=null) buttonScript._menuButtonScript.TextButton.text = i.ToString();
+            if (buttonScript != null)
+            {
+                buttonScript._menuButtonScript.TextButton.text = i.ToString();
+                //associate with the right scene
+                buttonScript._menuButtonScript.SceneNameToGoTo = $"level{i}";
+            }
 
             //content width
             _contentScrollView.sizeDelta = new Vector2 (_contentScrollView.rect.width+widthAdding, _contentScrollView.rect.height);
-            
-            //associate with the right scene
-            buttonScript._menuButtonScript.SceneNameToGoTo = $"level{i}";
         }
     }
 
     private void SetupCursor()
     {
-        var cursorPos = new Vector3(_buttonTransformList[0].position.x,_buttonTransformList[0].position.y + _cursorOffsetY, _buttonTransformList[0].transform.position.z);
-        _cursor = Instantiate(_cursorPrefab, _buttonTransformList[0]);
+        var cursorPos = new Vector3(_buttonTransformAndUnlockBoolList.ElementAt(0).Key.position.x,
+            _buttonTransformAndUnlockBoolList.ElementAt(0).Key.position.y + _cursorOffsetY, 
+            _buttonTransformAndUnlockBoolList.ElementAt(0).Key.transform.position.z);
+        _cursor = Instantiate(_cursorPrefab, _buttonTransformAndUnlockBoolList.ElementAt(0).Key);
         _cursor.transform.position = cursorPos;
-        _buttonTransformList[_currentLevelSelected].GetComponent<ButtonPrefabScript>()._menuButtonScript.ScaleUpAnimation();
+        GetMenuButtonScriptOfCurrentLevel().ScaleUpAnimation();
     }
 
     private void MoveCursor(Direction direction)
@@ -77,25 +91,39 @@ public class LevelSelectionManager : MonoBehaviour
         if (_currentTween.IsActive()) return;
         
         _cursor.transform.DOComplete();
-        _buttonTransformList[_currentLevelSelected].GetComponent<ButtonPrefabScript>()._menuButtonScript.ScaleDownAnimation();
+        if (GetMenuButtonScriptOfCurrentLevel().IsUnlocked)
+            GetMenuButtonScriptOfCurrentLevel().ScaleDownAnimation();
         switch (direction)
         {
             case Direction.Left:
                 if (_currentLevelSelected == 0) break;
                 _currentLevelSelected--;
-                _currentTween = _cursor.transform.DOMoveX(_buttonTransformList[_currentLevelSelected].position.x, _cursorAnimationtime).OnComplete(MoveScrollBar);
+                _currentTween = _cursor.transform.
+                    DOMoveX(_buttonTransformAndUnlockBoolList.ElementAt(_currentLevelSelected).Key.position.x, _cursorAnimationtime).OnComplete(MoveScrollBar);
                 break;
             case Direction.Right:
                 if (_currentLevelSelected == _numberOfLevel-1) break;
                 _currentLevelSelected++;
-                _currentTween = _cursor.transform.DOMoveX(_buttonTransformList[_currentLevelSelected].position.x, _cursorAnimationtime).OnComplete(MoveScrollBar);
+                _currentTween = _cursor.transform.
+                    DOMoveX(_buttonTransformAndUnlockBoolList.ElementAt(_currentLevelSelected).Key.position.x, _cursorAnimationtime).OnComplete(MoveScrollBar);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
         }
-        _buttonTransformList[_currentLevelSelected].GetComponent<ButtonPrefabScript>()._menuButtonScript.ScaleUpAnimation();
-        _cursor.transform.parent = _buttonTransformList[_currentLevelSelected];
+        if (GetMenuButtonScriptOfCurrentLevel().IsUnlocked)
+            GetMenuButtonScriptOfCurrentLevel().ScaleUpAnimation();
+        _cursor.transform.parent = _buttonTransformAndUnlockBoolList.ElementAt(_currentLevelSelected).Key;
         
+    }
+
+    private MenuButtonScript GetMenuButtonScriptOfCurrentLevel()
+    {
+        return _buttonTransformAndUnlockBoolList.ElementAt(_currentLevelSelected).Key.GetComponent<ButtonPrefabScript>()._menuButtonScript;
+    }
+
+    private bool IsUnlocked()
+    {
+        return GetMenuButtonScriptOfCurrentLevel().IsUnlocked;
     }
 
     private void MoveScrollBar()
@@ -107,6 +135,17 @@ public class LevelSelectionManager : MonoBehaviour
         float offset = _currentLevelSelected == 0 ? 0 : isFirstHalf ? - offsetValue : offsetValue;
         //animation
         _currentTween = _scrollRect.DOHorizontalNormalizedPos((_currentLevelSelected+offset) / _numberOfLevel, _cursorAnimationtime);
+    }
+
+    private void SelectLevel()
+    {
+        if (IsUnlocked())
+            GetMenuButtonScriptOfCurrentLevel().GoToScene();
+    }
+
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene("MenuScene");
     }
 }
 

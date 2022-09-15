@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Newtonsoft.Json.Serialization;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -24,11 +25,23 @@ public class MenuButtonScript : MonoBehaviour, IPointerEnterHandler, IPointerExi
     //referencing
     [BoxGroup("Referencing")] public string SceneNameToGoTo;
     [BoxGroup("Referencing")] public TextMeshProUGUI TextButton;
+    [BoxGroup("Referencing")] [SerializeField] private GameObject _lockIcon;
 
     private Tween _currentTween;
     private Vector3 _startPosition;
-    
+    [HideInInspector] public bool IsUnlocked = false;
     private void Start()
+    {
+        StartingAnimation();
+    }
+
+    public void Unlock()
+    {
+        IsUnlocked = true;
+        _lockIcon.gameObject.SetActive(!IsUnlocked);
+    }
+
+    private void StartingAnimation()
     {
         _startPosition = transform.position;
         transform.DOComplete();
@@ -39,7 +52,7 @@ public class MenuButtonScript : MonoBehaviour, IPointerEnterHandler, IPointerExi
                 var basePositionX = position.x;
                 position = new Vector3(position.x + _positionOffScreenX, position.y, position.z);
                 transform.position = position;
-                _currentTween = transform.DOMoveX(basePositionX,_animationSpeed);
+                _currentTween = transform.DOMoveX(basePositionX, _animationSpeed);
                 break;
             case AnimationType.ScaleUp:
                 transform.localScale = Vector3.one;
@@ -51,12 +64,12 @@ public class MenuButtonScript : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        ScaleUpAnimation();
+        if (_animationType==AnimationType.SideSlide) ScaleUpAnimation();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        ScaleDownAnimation();
+        if (_animationType==AnimationType.SideSlide) ScaleDownAnimation();
     }
 
     //scaling animation functions

@@ -589,9 +589,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animationSpeed: 0.5
+  _animationType: 0
   _animationOffsetX: 0.5
   _positionOffScreenX: -5
-  _sceneNameToGoTo: ExampleLevelScene
+  _animationScale: 1.25
+  SceneNameToGoTo: LevelSelection
+  TextButton: {fileID: 0}
 --- !u!1 &891798299
 GameObject:
   m_ObjectHideFlags: 0
@@ -728,9 +731,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animationSpeed: 0.5
+  _animationType: 0
   _animationOffsetX: 0.5
   _positionOffScreenX: -5
-  _sceneNameToGoTo: 
+  _animationScale: 1.25
+  SceneNameToGoTo: 
+  TextButton: {fileID: 0}
 --- !u!1 &904431665
 GameObject:
   m_ObjectHideFlags: 0
