@@ -32,6 +32,7 @@ public class EndGameUIController : MonoBehaviour
 
     public void LaunchEndGameUI(bool isWin)
     {
+        LevelUnlockedScript.Level++;
         gameObject.SetActive(true);
         const float animDuration = 1f;
         const float blackFadeAlpha = .6f;

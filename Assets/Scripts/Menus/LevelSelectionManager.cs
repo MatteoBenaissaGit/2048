@@ -58,7 +58,7 @@ public class LevelSelectionManager : MonoBehaviour
             if (i==_numberOfLevel) buttonScript.DeactivateLine();
             
             //setup lock
-            bool isUnlocked = i == 1; //setup this with a dont destroy object that got the lock of each level
+            bool isUnlocked = LevelUnlockedScript.Level >= i ; //setup this with a dont destroy object that got the lock of each level
             _buttonTransformAndUnlockBoolList.Add(buttonScript.transform, isUnlocked);
             if (isUnlocked) buttonScript._menuButtonScript.Unlock();
             if (i==1) buttonScript._menuButtonScript.ScaleUpAnimation();
