@@ -2101,8 +2101,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gearTurnSpeed: 0.1
   _gear: {fileID: 1183634788}
-  _goalText: {fileID: 0}
-  _gameManager: {fileID: 0}
+  _goalText: {fileID: 2125864012}
+  _gameManager: {fileID: 1670707800}
 --- !u!1 &1514913972
 GameObject:
   m_ObjectHideFlags: 0
@@ -2639,9 +2639,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _width: 4
   _height: 4
-  WinConditionType: 0
-  WinShieldCondition: 128
-  WinPointsCondition: 10000
+  WinConditionType: 1
+  WinShieldCondition: 2048
+  WinPointsCondition: 2500
   _pointsToActivateDoubleBonus: 1000
   _types:
   - Value: 2

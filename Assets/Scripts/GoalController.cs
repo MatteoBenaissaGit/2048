@@ -3,12 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
 
 public class GoalController : MonoBehaviour
 {
     [BoxGroup("Variable")] [SerializeField] private float _gearTurnSpeed;
+    
     [BoxGroup("References")] [SerializeField] private Transform _gear;
+    [BoxGroup("References")] [SerializeField] private TextMeshProUGUI _goalText;
+    [BoxGroup("References")] [SerializeField] private GameManager _gameManager;
+
+    private void Start()
+    {
+        _goalText.text = _gameManager.WinConditionType == WinCondition.ShieldValue
+            ? $"obtains a shield of {_gameManager.WinShieldCondition}"
+            : $"obtains {_gameManager.WinPointsCondition} points";
+    }
 
     private bool _isTurning = true;
 

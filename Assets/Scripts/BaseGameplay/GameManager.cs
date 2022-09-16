@@ -16,11 +16,11 @@ public class GameManager : MonoBehaviour
     
     [TabGroup("Grid")] [SerializeField] private int _width = 4;
     [TabGroup("Grid")] [SerializeField] private int _height = 4;
-    [TabGroup("Grid")] [EnumToggleButtons] [SerializeField] private WinCondition _winConditionType;
-    private bool _isWinTypeShieldValue => _winConditionType == WinCondition.ShieldValue;
-    private bool _isWinTypePoints => _winConditionType == WinCondition.PointsValue;
-    [ShowIf("_isWinTypeShieldValue")] [TabGroup("Grid")] [SerializeField] private int _winShieldCondition = 2048;
-    [ShowIf("_isWinTypePoints")] [TabGroup("Grid")] [SerializeField] private int _winPointsCondition = 10000;
+    [TabGroup("Grid")] [EnumToggleButtons] public WinCondition WinConditionType;
+    private bool _isWinTypeShieldValue => WinConditionType == WinCondition.ShieldValue;
+    private bool _isWinTypePoints => WinConditionType == WinCondition.PointsValue;
+    [ShowIf("_isWinTypeShieldValue")] [TabGroup("Grid")] public int WinShieldCondition = 2048;
+    [ShowIf("_isWinTypePoints")] [TabGroup("Grid")] public int WinPointsCondition = 10000;
     [TabGroup("Grid")] [SerializeField] private int _pointsToActivateDoubleBonus = 1000;
 
     [TabGroup("Blocks")] [SerializeField] private List<BlockType> _types;
@@ -200,13 +200,13 @@ public class GameManager : MonoBehaviour
         }
         
         // enum that depend on the win condition type
-        switch (_winConditionType)
+        switch (WinConditionType)
         {
             case WinCondition.ShieldValue:
-                ChangeState(_blockList.Any(b=>b.Value>=_winShieldCondition) ? GameState.Win : GameState.WaitingInput);
+                ChangeState(_blockList.Any(b=>b.Value>=WinShieldCondition) ? GameState.Win : GameState.WaitingInput);
                 break;
             case WinCondition.PointsValue:
-                ChangeState(_pointsController.ValueNumber >= _winPointsCondition ? GameState.Win : GameState.WaitingInput);
+                ChangeState(_pointsController.ValueNumber >= WinPointsCondition ? GameState.Win : GameState.WaitingInput);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
