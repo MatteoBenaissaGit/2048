@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
+using Cinemachine;
 using DG.Tweening;
+using MoreMountains.Feedbacks;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
@@ -27,6 +29,7 @@ public class GameManager : MonoBehaviour
     [TabGroup("Blocks")] [SerializeField] [Range(0,1)] private float _travelTime = .5f;
 
     [Title("Main Game")]
+    [TabGroup("References")] [SerializeField] private CinemachineVirtualCamera _cinemachineVirtualCamera;
     [TabGroup("References")] [SerializeField] private Node _nodePrefab;
     [TabGroup("References")] [SerializeField] private Block _blockPrefab;
     [TabGroup("References")] [SerializeField] private SpriteRenderer _boardPrefabSpriteRenderer;
@@ -38,6 +41,7 @@ public class GameManager : MonoBehaviour
     [TabGroup("References")] [SerializeField] private Transform _pointControllerTransform;
     [TabGroup("References")] [SerializeField] private PointEffectController _pointsEffectPrefab;
     [TabGroup("References")] [SerializeField] private GoalController _goalController;
+    [TabGroup("References")] [SerializeField] private MMF_Player _doubleBonusIconMMFPlayer;
     [Title("Bonus")]
     [TabGroup("References")] [SerializeField] private Image _bonusPrefabImage;
     [TabGroup("References")] [SerializeField] private Image _bonusPrefabKeyImage;
@@ -174,7 +178,7 @@ public class GameManager : MonoBehaviour
         board.size = new Vector2(_width, _height);
         
         //camera centering
-        if (Camera.main != null) Camera.main.transform.position = new Vector3(center.x, center.y, -10);
+        if (_cinemachineVirtualCamera != null) _cinemachineVirtualCamera.transform.position = new Vector3(center.x, center.y, -10);
 
         //first spawn
         ChangeState(GameState.SpawningBlocks);
@@ -346,11 +350,7 @@ public class GameManager : MonoBehaviour
         //effect when complete
         if (!isBonusAlreadyAvailable && fillPercentage >= 1)
         {
-            _bonusPrefabImage.transform.DOComplete();
-            float effectSpeed = .2f;
-            Vector3 punchEffectForce = new Vector3(1.5f,1.5f,1.5f);
-            _bonusPrefabImage.transform.DOPunchScale(punchEffectForce, effectSpeed);
-            
+            _doubleBonusIconMMFPlayer.PlayFeedbacks();
             _bonusPrefabKeyImage.gameObject.SetActive(true);
         }
     }
