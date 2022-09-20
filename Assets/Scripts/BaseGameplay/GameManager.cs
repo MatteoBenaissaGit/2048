@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
     [TabGroup("References")] [SerializeField] private Transform _pointControllerTransform;
     [TabGroup("References")] [SerializeField] private PointEffectController _pointsEffectPrefab;
     [TabGroup("References")] [SerializeField] private GoalController _goalController;
+    [TabGroup("References")] [SerializeField] private MMFeedbacks _doubleBonusMMFFeedbacks;
     [TabGroup("References")] [SerializeField] private MMF_Player _doubleBonusIconMMFPlayer;
     [Title("Bonus")]
     [TabGroup("References")] [SerializeField] private Image _bonusPrefabImage;
@@ -245,12 +246,14 @@ public class GameManager : MonoBehaviour
                 const float blockPunchEffect1Speed = .25f;
                 block.transform.DOPunchScale(blockPunchEffect1Scale, blockPunchEffect1Speed);
                 block.transform.DORotate(new Vector3(0, 0, 360), blockPunchEffect1Speed);
+                block.MmfPlayer.PlayFeedbacks();
                 break;
             case 2 : //double bonus
                 var blockPunchEffect2Scale = new Vector3(1f,1f,1f);
                 const float blockPunchEffect2Speed = .2f;
                 block.transform.DOPunchScale(blockPunchEffect2Scale, blockPunchEffect2Speed);
                 block.transform.DORotate(new Vector3(0, 0, 360), blockPunchEffect2Speed);
+                block.MmfPlayer.PlayFeedbacks();
                 break;
         }
     }
@@ -383,6 +386,9 @@ public class GameManager : MonoBehaviour
         _selectorTransform.localScale = Vector2.zero;
         const float selectorScaleSpeed = .2f;
         _selectorTransform.DOScale(new Vector2(.5f,.5f), selectorScaleSpeed);
+        //feedbacks
+        _doubleBonusIconMMFPlayer.PlayFeedbacks();
+        _doubleBonusMMFFeedbacks.PlayFeedbacks();
         
         ChangeState(GameState.WaitingInput);
     }
@@ -419,15 +425,14 @@ public class GameManager : MonoBehaviour
 
     private void DoubleBonusSelectorSelection(Node node)
     {
-        //guard if node null
-        if (node == null) return;
-        //guard if node is not occupied
-        if (node.OccupiedBlock == null) return;
+        //guard if node is not occupied or null
+        if (node == null || node.OccupiedBlock == null) return;
         
         //do the bonus
         var block = node.OccupiedBlock;
         SpawnBlock(node,block.Value*2, 2);
         RemoveBlock(block);
+        _doubleBonusMMFFeedbacks.PlayFeedbacks();
 
         ResetSelectorTransformVariable();
 
