@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using MoreMountains.Feedbacks;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -18,6 +19,8 @@ public class PointEffectController : MonoBehaviour
 
     private Vector3 _pointControllerSize;
 
+    public MMF_Player HitEffectMMFPlayer;
+
     private void Start()
     {
         _pointControllerSize = PointControllerTransform.localScale;
@@ -28,7 +31,7 @@ public class PointEffectController : MonoBehaviour
         if (!_isGoingToPointController) return;
 
         transform.position = Vector3.Slerp(_startPosition, _pointControllerPosition, _slerpEffectSpeed);
-        if (transform.position == _pointControllerPosition) 
+        if (transform.position == _pointControllerPosition)
             EndAnimation();
     }
 
@@ -47,6 +50,7 @@ public class PointEffectController : MonoBehaviour
 
     private void EndAnimation()
     {
+        HitEffectMMFPlayer.PlayFeedbacks();
         const float effectSpeed = .25f;
         Vector3 punchForce = new Vector3(.2f,.2f,.2f);
         PointControllerTransform.DOComplete();

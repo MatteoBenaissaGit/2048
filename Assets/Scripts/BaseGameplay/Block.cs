@@ -16,6 +16,7 @@ public class Block : MonoBehaviour
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private TextMeshPro _text;
 
+    public MMF_Player EndParticleMMFPlayer; 
     public MMF_Player MmfPlayer;
     
     public void Init(BlockType type)

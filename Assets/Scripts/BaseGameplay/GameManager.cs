@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
     [TabGroup("References")] [SerializeField] private GoalController _goalController;
     [TabGroup("References")] [SerializeField] private MMFeedbacks _doubleBonusMMFFeedbacks;
     [TabGroup("References")] [SerializeField] private MMF_Player _doubleBonusIconMMFPlayer;
+    [TabGroup("References")] [SerializeField] private MMF_Player _pointsIconMMFPlayer;
     [Title("Bonus")]
     [TabGroup("References")] [SerializeField] private Image _bonusPrefabImage;
     [TabGroup("References")] [SerializeField] private Image _bonusPrefabKeyImage;
@@ -109,6 +110,7 @@ public class GameManager : MonoBehaviour
             case GameState.Win:
                 _goalController.EndAnim();
                 _endGameUIController.LaunchEndGameUI(true);
+                AnimEndBlock();
                 break;
             case GameState.Lose:
                 _endGameUIController.LaunchEndGameUI(false);
@@ -332,6 +334,11 @@ public class GameManager : MonoBehaviour
         return _nodeList.FirstOrDefault(n => n.Pos == pos);
     }
 
+    private void AnimEndBlock()
+    {
+        _blockList.OrderByDescending(b=>b.Value).FirstOrDefault().EndParticleMMFPlayer.PlayFeedbacks();
+    }
+
     #endregion
 
     #region Bonuses
@@ -480,6 +487,7 @@ public class GameManager : MonoBehaviour
         var pointEffect = Instantiate(_pointsEffectPrefab, position, Quaternion.identity);
         pointEffect.PointControllerTransform = _pointControllerTransform;
         pointEffect.StartPointAnimation();
+        pointEffect.HitEffectMMFPlayer = _pointsIconMMFPlayer;
     }
 
     [TabGroup("Debug")]

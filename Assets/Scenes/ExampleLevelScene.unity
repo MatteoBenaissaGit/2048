@@ -2737,6 +2737,97 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_TargetDisplay: 0
+--- !u!1001 &1122926352
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1624777207}
+    m_Modifications:
+    - target: {fileID: 1620636520166436, guid: 07757cf211bd45044a1f1917658b9e66, type: 3}
+      propertyPath: m_Name
+      value: Punch Hit
+      objectReference: {fileID: 0}
+    - target: {fileID: 4572416853492060, guid: 07757cf211bd45044a1f1917658b9e66, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4572416853492060, guid: 07757cf211bd45044a1f1917658b9e66, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 4572416853492060, guid: 07757cf211bd45044a1f1917658b9e66, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 4572416853492060, guid: 07757cf211bd45044a1f1917658b9e66, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4572416853492060, guid: 07757cf211bd45044a1f1917658b9e66, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4572416853492060, guid: 07757cf211bd45044a1f1917658b9e66, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4572416853492060, guid: 07757cf211bd45044a1f1917658b9e66, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4572416853492060, guid: 07757cf211bd45044a1f1917658b9e66, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4572416853492060, guid: 07757cf211bd45044a1f1917658b9e66, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4572416853492060, guid: 07757cf211bd45044a1f1917658b9e66, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4572416853492060, guid: 07757cf211bd45044a1f1917658b9e66, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198133543906009672, guid: 07757cf211bd45044a1f1917658b9e66, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198944286794288116, guid: 07757cf211bd45044a1f1917658b9e66, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 199087360599983476, guid: 07757cf211bd45044a1f1917658b9e66, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 199087360599983476, guid: 07757cf211bd45044a1f1917658b9e66, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 199554498134081982, guid: 07757cf211bd45044a1f1917658b9e66, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 199554498134081982, guid: 07757cf211bd45044a1f1917658b9e66, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 07757cf211bd45044a1f1917658b9e66, type: 3}
+--- !u!4 &1122926353 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4572416853492060, guid: 07757cf211bd45044a1f1917658b9e66, type: 3}
+  m_PrefabInstance: {fileID: 1122926352}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &1122926354 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 198944286794288116, guid: 07757cf211bd45044a1f1917658b9e66, type: 3}
+  m_PrefabInstance: {fileID: 1122926352}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1183634787
 GameObject:
   m_ObjectHideFlags: 0
@@ -3381,6 +3472,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1624777207}
   - component: {fileID: 1624777208}
+  - component: {fileID: 1624777209}
   m_Layer: 5
   m_Name: UnitIcon
   m_TagString: Untagged
@@ -3399,7 +3491,8 @@ Transform:
   m_LocalPosition: {x: -2.8601, y: 1.9702001, z: 10}
   m_LocalScale: {x: 0.32256132, y: 0.32256132, z: 0.32256132}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1122926353}
   m_Father: {fileID: 1753887890}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3455,6 +3548,100 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1624777209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1624777206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6da43522623d4704e979466dc7650b65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Feedbacks: []
+  InitializationMode: 2
+  SafeMode: 3
+  Direction: 0
+  AutoChangeDirectionOnEnd: 0
+  AutoPlayOnStart: 0
+  AutoPlayOnEnable: 0
+  ForceTimescaleMode: 0
+  ForcedTimescaleMode: 1
+  DurationMultiplier: 1
+  DisplayFullDurationDetails: 0
+  PlayerTimescaleMode: 1
+  CooldownDuration: 0
+  InitialDelay: 0
+  CanPlay: 1
+  CanPlayWhileAlreadyPlaying: 1
+  ChanceToPlay: 100
+  FeedbacksIntensity: 1
+  Events:
+    TriggerMMFeedbacksEvents: 0
+    TriggerUnityEvents: 1
+    OnPlay:
+      m_PersistentCalls:
+        m_Calls: []
+    OnPause:
+      m_PersistentCalls:
+        m_Calls: []
+    OnResume:
+      m_PersistentCalls:
+        m_Calls: []
+    OnRevert:
+      m_PersistentCalls:
+        m_Calls: []
+    OnComplete:
+      m_PersistentCalls:
+        m_Calls: []
+  DebugActive: 0
+  FeedbacksList:
+  - rid: 4509108646015401987
+  KeepPlayModeChanges: 0
+  PerformanceMode: 0
+  ForceStopFeedbacksOnDisable: 1
+  references:
+    version: 2
+    RefIds:
+    - rid: 4509108646015401987
+      type: {class: MMF_Particles, ns: MoreMountains.Feedbacks, asm: MoreMountains.Feedbacks}
+      data:
+        Active: 1
+        UniqueID: 1359756064
+        Label: Particles Play
+        Channel: 0
+        Chance: 100
+        DisplayColor: {r: 0, g: 0, b: 0, a: 1}
+        Timing:
+          TimescaleMode: 0
+          ExcludeFromHoldingPauses: 0
+          ContributeToTotalDuration: 1
+          InitialDelay: 0
+          CooldownDuration: 0
+          InterruptsOnStop: 1
+          NumberOfRepeats: 0
+          RepeatForever: 0
+          DelayBetweenRepeats: 1
+          MMFeedbacksDirectionCondition: 0
+          PlayDirection: 0
+          ConstantIntensity: 0
+          UseIntensityInterval: 0
+          IntensityIntervalMin: 0
+          IntensityIntervalMax: 0
+          Sequence: {fileID: 0}
+          TrackID: 0
+          Quantized: 0
+          TargetBPM: 120
+        Owner: {fileID: 1624777209}
+        DebugActive: 0
+        Mode: 0
+        BoundParticleSystem: {fileID: 1122926354}
+        RandomParticleSystems: []
+        MoveToPosition: 0
+        ActivateOnPlay: 0
+        StopSystemOnInit: 1
 --- !u!1 &1648725214
 GameObject:
   m_ObjectHideFlags: 0
@@ -3621,9 +3808,9 @@ MonoBehaviour:
   _width: 4
   _height: 4
   WinConditionType: 0
-  WinShieldCondition: 2048
+  WinShieldCondition: 128
   WinPointsCondition: 10000
-  _pointsToActivateDoubleBonus: 50
+  _pointsToActivateDoubleBonus: 1000
   _types:
   - Value: 2
     Color: {r: 0.8745098, g: 0.4, b: 0.7372549, a: 1}
@@ -3661,6 +3848,7 @@ MonoBehaviour:
   _goalController: {fileID: 1446293997}
   _doubleBonusMMFFeedbacks: {fileID: 1902194217}
   _doubleBonusIconMMFPlayer: {fileID: 2130120700}
+  _pointsIconMMFPlayer: {fileID: 1624777209}
   _bonusPrefabImage: {fileID: 2130120698}
   _bonusPrefabKeyImage: {fileID: 1514913974}
   _bonusEscapeUI: {fileID: 198766287}
