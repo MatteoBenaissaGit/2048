@@ -24,8 +24,8 @@ public class MenuButtonScript : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     //referencing
     [BoxGroup("Referencing")] public string SceneNameToGoTo;
-    [BoxGroup("Referencing")] public TextMeshProUGUI TextButton;
-    [BoxGroup("Referencing")] [SerializeField] private GameObject _lockIcon;
+    [ShowIf("_isScale")] [BoxGroup("Referencing")] public TextMeshProUGUI TextButton;
+    [ShowIf("_isScale")] [BoxGroup("Referencing")] [SerializeField] private GameObject _lockIcon;
 
     private Tween _currentTween;
     private Vector3 _startPosition;
